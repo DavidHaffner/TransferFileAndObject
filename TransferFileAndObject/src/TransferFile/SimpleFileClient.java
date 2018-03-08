@@ -5,57 +5,44 @@
  */
 package TransferFile;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
+
 
 public class SimpleFileClient {
 
-  public final static int SOCKET_PORT = 13267;      // you may change this
+  public final static int SOCKET_PORT = 8081;      // you may change this
   public final static String SERVER = "127.0.0.1";  // localhost
   public final static String
-       FILE_TO_RECEIVED = "C:/Users/Student/Desktop/zkouska.txt";  // you may change this
+       FILE_TO_RECEIVED = "C:/Users/Student/Desktop/enigma1.enigma";  // you may change this
 
   public final static int FILE_SIZE = 6022386; // file size temporary hard coded
                                                // should bigger than the file to be downloaded
 
   
-  public static void main (String [] args ) throws IOException {
-    int bytesRead;
-    int current = 0;
-    FileOutputStream fos = null;
-    BufferedOutputStream bos = null;
-    Socket socket = null;
-    try {
-      socket = new Socket(SERVER, SOCKET_PORT);
-      System.out.println("Connecting...");
+  public static void main(String[] args) throws IOException {
+        Socket socket = null;
 
-      // receive file
-      byte [] myByteArray  = new byte [FILE_SIZE];
-      InputStream is = socket.getInputStream();
-      fos = new FileOutputStream(FILE_TO_RECEIVED);
-      bos = new BufferedOutputStream(fos);
-      bytesRead = is.read(myByteArray,0,myByteArray.length);
-      current = bytesRead;
+        socket = new Socket(SERVER, SOCKET_PORT); 
 
-      do {
-         bytesRead =
-            is.read(myByteArray, current, (myByteArray.length-current));
-         if(bytesRead >= 0) current += bytesRead;
-      } while(bytesRead > -1);
+        File file = new File(FILE_TO_RECEIVED);
+        // Get the size of the file
+        long length = file.length();
+        byte[] bytes = new byte[16 * 1024];
+        InputStream is = new FileInputStream(file);
+        OutputStream os = socket.getOutputStream();
 
-      bos.write(current);
-      bos.flush();
-      System.out.println("File " + FILE_TO_RECEIVED
-          + " downloaded (" + current + " bytes read)");
+        int count;
+        while ((count = is.read(bytes)) > 0) {
+            os.write(bytes, 0, count);
+        }
+
+        os.close();
+        is.close();
+        socket.close();
     }
-    finally {
-      if (fos != null) fos.close();
-      if (bos != null) bos.close();
-      if (socket != null) socket.close();
-    }
-  }
-
 }
