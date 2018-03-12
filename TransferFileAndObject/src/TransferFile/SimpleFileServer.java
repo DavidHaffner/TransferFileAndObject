@@ -17,7 +17,7 @@ import java.net.Socket;
 public class SimpleFileServer {
 
   public final static int SOCKET_PORT = 8081;  // you may change this
-  public final static String FILE_TO_SEND = "C:/Users/Student/Desktop/test.enigma";  // you may change this
+  public final static String FILE_TO_SEND = "C:/Users/ShangTzu/Desktop/test.pdf";  // you may change this
 
   
   public static void main(String[] args) throws IOException {

@@ -18,7 +18,7 @@ public class SimpleFileClient {
   public final static int SOCKET_PORT = 8081;      // you may change this
   public final static String SERVER = "127.0.0.1";  // localhost
   public final static String
-       FILE_TO_RECEIVED = "C:/Users/Student/Desktop/enigma1.enigma";  // you may change this
+       FILE_TO_RECEIVED = "C:/Users/ShangTzu/Desktop/CV/Haffner_životopis.pdf";  // you may change this
 
   public final static int FILE_SIZE = 6022386; // file size temporary hard coded
                                                // should bigger than the file to be downloaded
